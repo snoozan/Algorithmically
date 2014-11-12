@@ -56,13 +56,7 @@ Taken from [http://bigocheatsheet.com/](http://bigocheatsheet.com/) and a failed
 * Adjacency matrix
 * Incidence matrix
 
-##Disclaimer
-This list is almost verbatim from [http://bigocheatsheet.com/](http://bigocheatsheet.com/)
-
-
-
 ###Languages
-
 * Julia
 * Go
 * Python
@@ -71,3 +65,9 @@ This list is almost verbatim from [http://bigocheatsheet.com/](http://bigocheats
 * Rust
 * Javascript
 * Java
+
+##Disclaimer
+This list is almost verbatim from [http://bigocheatsheet.com/](http://bigocheatsheet.com/)
+
+
+
