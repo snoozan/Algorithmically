@@ -64,7 +64,7 @@ Taken from [http://bigocheatsheet.com/](http://bigocheatsheet.com/) and a failed
 * C
 * Rust
 * Javascript
-* Java
+* Java7
 
 ##Disclaimer
 This list is almost verbatim from [http://bigocheatsheet.com/](http://bigocheatsheet.com/)
