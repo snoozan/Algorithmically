@@ -14,33 +14,29 @@ void merge(int left_num, int left[], int right_num, int right[], int array[]){
     int pt_right = 0; //first element in right list
     int index = 0;
 
-    while(pt_left < left_num && pt_right < right_num){
+    while(pt_left < left_num && pt_right < right_num){ //each are not at the end of their list
         if(left[pt_left] <= right[pt_right]){
+            //swap values
             array[index] = left[pt_left];
             pt_left++;
             index++;
         }
         else{
+            //swap values
             array[index] = right[pt_right];
             pt_right++;
             index++;
         }
     }
-    while(pt_left < left_num){
+    while(pt_left < left_num){ //will only execute if right has gone past its right_num
         array[index] = left[pt_left];
         pt_left++;
         index++;
     }
-    while(pt_right < right_num){
+    while(pt_right < right_num){ //will only execute if left has gone past its left_num
         array[index] = right[pt_right];
         pt_right++;
         index++;
-    }
-}
-
-void copy(int begin, int end, int array[], int sorted[]){
-    for(int i = begin; i < end; i++){
-        sorted[i] = array[i];
     }
 }
 
@@ -83,9 +79,8 @@ int main(){
     }
     printf("]\n");
 
-    int sorted[8] = {0};
-
     split(8, array);
+
     printf("The current state of sorted is: [");
     for(int i = 0; i < 8; i++){
         printf("%d", array[i]);
