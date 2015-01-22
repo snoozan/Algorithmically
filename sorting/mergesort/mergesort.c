@@ -2,6 +2,7 @@
  * Author: Susan Lunn
  * filename: mergesort.c
  * Use: implements mergesort in c/
+ * I use the stack for this entire thing -> no mallocs
  */
 
 
