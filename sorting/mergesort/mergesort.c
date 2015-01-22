@@ -9,46 +9,34 @@
 #include <stdlib.h>
 
 
-void merge(int begin, int middle, int end, int array[], int sorted[]){
-    int pt_left = begin; //first element in left list
-    int pt_right = middle; //first element in right list
+void merge(int left_num, int left[], int right_num, int right[], int array[]){
+    int pt_left = 0; //first element in left list
+    int pt_right = 0; //first element in right list
     int index = 0;
-    int length = end - begin;
 
-    while (index < length){
-        if(pt_left >= middle){
-            sorted[index] = array[pt_right];
-            index = length;
-        }
-        else if(pt_right >= end){
-            sorted[index] = array[pt_left];
-            index = length;
+    while(pt_left < left_num && pt_right < right_num){
+        if(left[pt_left] <= right[pt_right]){
+            array[index] = left[pt_left];
+            pt_left++;
+            index++;
         }
         else{
-            if(array[pt_left] < array[pt_right]){
-                sorted[index] = array[pt_left];
-                pt_left++;
-            }
-            else {
-                sorted[index] = array[pt_right];
-                pt_right++;
-            }
+            array[index] = right[pt_right];
+            pt_right++;
+            index++;
         }
-        index++;
-
     }
-
-    // printf("beginning is: %d middle is: %d end is: %d \n", begin, middle, end);
-    // printf("The current state of sorted is: [");
-    // for(int i = 0; i < middle; i++){
-    //     printf("%d", sorted[i]);
-    //     if(i < middle-1){
-    //         printf(", ");
-    //     }
-    // }
-    // printf("]\n");
-
-};
+    while(pt_left < left_num){
+        array[index] = left[pt_left];
+        pt_left++;
+        index++;
+    }
+    while(pt_right < right_num){
+        array[index] = right[pt_right];
+        pt_right++;
+        index++;
+    }
+}
 
 void copy(int begin, int end, int array[], int sorted[]){
     for(int i = begin; i < end; i++){
@@ -56,46 +44,31 @@ void copy(int begin, int end, int array[], int sorted[]){
     }
 }
 
-void split(int left, int right, int array[], int sorted[]){
-    if(right - left < 2){
+void split(int length, int array[]){
+    if(length < 2){
         return; //don't need to return an item
     }
 
-    int middle = (left+right)/2;
+    int left_num = length/2; //the first half of elements
+    int right_num = length - left_num; //the remainder of elements
 
-    //debugging
-    //printf("The left array currently is: [");
-    //for(int i = 0; i < middle; i++){
-    //    printf("%d", array[i]);
-    //    if(i < middle-1){
-    //        printf(", ");
-    //    }
-    //}
-    //printf("] ");
+    int left[left_num];
+    int right[right_num];
 
-    //printf("The right array currently is: [");
-    //for(int i = middle; i < right; i++){
-    //    printf("%d", array[i]);
-    //    if(i < right-1){
-    //        printf(", ");
-    //    }
-    //}
-    //printf("]\n");
-
-    split(left, middle, array, sorted); //split them up
-    printf("The left array currently is: [");
-    for(int i = 0; i < middle; i++){
-        printf("%d", array[i]);
-        if(i < middle-1){
-            printf(", ");
-        }
+    for(int i = 0; i < left_num; i++){
+        left[i] = array[i];
     }
-    printf("] ");
 
-    split(middle, right, array, sorted); //split them up
+    for(int j = 0; j < right_num; j++){
+        right[j] = array[j + left_num]; //the second half
+    }
 
-    merge(left, middle, right, array, sorted); //split them up
 
+    split(left_num, left); //split them up
+
+    split(right_num, right); //split them up
+
+    merge(left_num, left, right_num, right, array); //split them up
 };
 
 int main(){
@@ -112,7 +85,7 @@ int main(){
 
     int sorted[8] = {0};
 
-    split(0, 7, array, sorted);
+    split(8, array);
     printf("The current state of sorted is: [");
     for(int i = 0; i < 8; i++){
         printf("%d", array[i]);
