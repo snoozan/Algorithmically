@@ -9,47 +9,54 @@
 #include <stdlib.h>
 
 
-/*
- * I use int* because fuck that array business
- */
-void merge(int begin, int middle, int end, int* array, int* sorted){
+void merge(int begin, int middle, int end, int array[], int sorted[]){
     int pt_left = begin; //first element in left list
     int pt_right = middle; //first element in right list
+    int index = 0;
+    int length = end - begin;
 
-
-    for(int i = begin; i < end; i++){
-        if(pt_left < middle && (pt_right >= end || array[pt_left] < array[pt_right])){
-            sorted[i] = array[pt_left];
-            pt_left++;
+    while (index < length){
+        if(pt_left >= middle){
+            sorted[index] = array[pt_right];
+            index = length;
+        }
+        else if(pt_right >= end){
+            sorted[index] = array[pt_left];
+            index = length;
         }
         else{
-            sorted[i] = array[pt_right];
-            pt_right++;
+            if(array[pt_left] < array[pt_right]){
+                sorted[index] = array[pt_left];
+                pt_left++;
+            }
+            else {
+                sorted[index] = array[pt_right];
+                pt_right++;
+            }
         }
+        index++;
+
     }
 
-    printf("beginning is: %d middle is: %d end is: %d \n", begin, middle, end);
-    printf("The current state of sorted is: [");
-    for(int i = 0; i < middle; i++){
-        printf("%d", sorted[i]);
-        if(i < middle-1){
-            printf(", ");
-        }
-    }
-    printf("]\n");
+    // printf("beginning is: %d middle is: %d end is: %d \n", begin, middle, end);
+    // printf("The current state of sorted is: [");
+    // for(int i = 0; i < middle; i++){
+    //     printf("%d", sorted[i]);
+    //     if(i < middle-1){
+    //         printf(", ");
+    //     }
+    // }
+    // printf("]\n");
 
 };
 
-void copy(int begin, int end, int* array, int* sorted){
+void copy(int begin, int end, int array[], int sorted[]){
     for(int i = begin; i < end; i++){
         sorted[i] = array[i];
     }
 }
 
-/*
- * I use int* because fuck that array business
- */
-void split(int left, int right, int* array, int* sorted){
+void split(int left, int right, int array[], int sorted[]){
     if(right - left < 2){
         return; //don't need to return an item
     }
@@ -76,10 +83,18 @@ void split(int left, int right, int* array, int* sorted){
     //printf("]\n");
 
     split(left, middle, array, sorted); //split them up
+    printf("The left array currently is: [");
+    for(int i = 0; i < middle; i++){
+        printf("%d", array[i]);
+        if(i < middle-1){
+            printf(", ");
+        }
+    }
+    printf("] ");
+
     split(middle, right, array, sorted); //split them up
 
     merge(left, middle, right, array, sorted); //split them up
-    copy(left, right, array, sorted);
 
 };
 
@@ -95,8 +110,9 @@ int main(){
     }
     printf("]\n");
 
-    int* sorted_array = malloc(sizeof(int) * 8);//using the heap like a pleb
-    split(0, 7, &array[0], sorted_array);
+    int sorted[8] = {0};
+
+    split(0, 7, array, sorted);
     printf("The current state of sorted is: [");
     for(int i = 0; i < 8; i++){
         printf("%d", array[i]);
@@ -105,7 +121,6 @@ int main(){
         }
     }
     printf("]\n");
-    free(sorted_array);
 }
 
 
