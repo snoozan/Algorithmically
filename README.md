@@ -2,6 +2,7 @@ Algorithmically
 ===============
 
 Several algorithms written in several different languages, graphified and descriptified using unix time() and D3 JS
+poop
 
 
 ###Inspiration
