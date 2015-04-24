@@ -4,6 +4,7 @@
  */
 
 
+import java.util.Arrays;
 
 public class mergesort {
 
@@ -13,17 +14,11 @@ public class mergesort {
     public static void main(String args[]){
         int[] array = {6,5,3,8,1,7,4,2};
 
-        System.out.println("The unsorted list is: " + array);
-
+        System.out.println("The unsorted list is: " + Arrays.toString(array));
         mergesort merger = new mergesort();
         merger.initSort(array);
 
-        System.out.print("The sorted list is: ");
-        for(int num: array){
-            System.out.print(num);
-        }
-
-        System.out.println("");
+        System.out.println("The sorted list is: " + Arrays.toString(array));
     }
 
     /*
@@ -37,7 +32,7 @@ public class mergesort {
 
     private void split(int left, int right){
         if(left < right){
-            int middle = (left + right)/2;
+            int middle = left + (right - left)/2; //index of middle
             split(left, middle);
             split(middle+1, right);
             merge(left, middle, right);
@@ -54,7 +49,7 @@ public class mergesort {
         int index = left; //since we're editing the array in place, we keep the index at left instead of 0
 
         //copy all values into sorted
-        for(int i = left; i < right; i++){
+        for(int i = left; i <= right; i++){
             sorted[i] = array[i];
         }
 
@@ -70,15 +65,24 @@ public class mergesort {
             index++;
         }
 
-        while(ptLeft < left){
+        while(ptLeft <= middle){
             array[index] = sorted[ptLeft];
+            ptLeft++;
             index++;
         }
 
+        /*
         while(ptRight < right){
             array[index] = sorted[ptRight];
+            ptRight++;
             index++;
         }
+        while(ptLeft <= middle){
+            array[index] = sorted[ptLeft];
+            ptLeft++;
+            index++;
+        }
+        */
 
     }
 
